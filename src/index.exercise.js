@@ -11,16 +11,63 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Logo } from './components/logo';
+// extra.1
+import { Dialog } from '@reach/dialog';
+import "@reach/dialog/styles.css";
+
+// extra.2 
+function LoginForm({ onSubmit, buttonText, onCancel }) {
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(e.target)
+        console.log(e.target.elements)
+        const { username, password } = e.target.elements
+        onSubmit({
+            username: username.value,
+            password: password.value
+        })
+    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="username">User Name:</label>
+            <input type="text" id="username" name="username" />
+            <br />
+            <label htmlFor="password">PassWord:</label>
+            <input type="password" id="password" name="password" />
+            <div className='btnGroup-login'>
+                <button>{buttonText}</button>
+                <button onClick={onCancel}>cancel</button>
+            </div>
+        </form>
+    )
+}
 
 function App() {
+    const [modalState, setModalState] = React.useState('none')
+    const close = () => setModalState('none')
+
+    const onLoginSubmit = (formData) => {
+        console.log('login data', formData)
+    }
+
+    const onRegisterSubmit = (formData) => {
+        console.log('register data', formData)
+    }
+
     return (
         <div className='container'>
             <h1>Bookshelf</h1>
             <Logo />
             <div className='btnGroup'>
-                <button onClick={() => console.log('login is clicked')}>login</button>
-                <button onClick={() => console.log('register is clicked')}>register</button>
+                <button onClick={() => setModalState('login')}>login</button>
+                <button onClick={() => setModalState('register')}>register</button>
             </div>
+            <Dialog isOpen={modalState === 'login'} onDismiss={close} aria-labelledby='login'>
+                <LoginForm buttonText='login' onSubmit={onLoginSubmit} onCancel={close} />
+            </Dialog>
+            <Dialog isOpen={modalState === 'register'} onDismiss={close} aria-labelledby='register account'>
+                <LoginForm buttonText='register' onSubmit={onRegisterSubmit} onCancel={close} />
+            </Dialog>
         </div>
     )
 }
