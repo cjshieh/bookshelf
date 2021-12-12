@@ -4,6 +4,20 @@
 
 Elaborate on your learnings here in `INSTRUCTIONS.md`
 
+`e.target.elements` retrieve all elements under a form
+`HTMLFormControlsCollection`
+
+I forgot how I could get form data. The following is a example:
+
+```
+// get input: username and password
+const { username, password } = e.target.elements
+
+// access input element, HTMLInputElement, value
+const username = username.value
+const password = password.value
+```
+
 ## Background
 
 The first step to any React app is to create a component and render it to the

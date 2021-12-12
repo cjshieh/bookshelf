@@ -20,7 +20,7 @@ function LoginForm({ onSubmit, buttonText, onCancel }) {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(e.target)
-        console.log(e.target.elements)
+        console.log(e.target.elements) //HTMLFormControlsCollection
         const { username, password } = e.target.elements
         onSubmit({
             username: username.value,
